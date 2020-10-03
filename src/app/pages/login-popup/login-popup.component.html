@@ -1,0 +1,128 @@
+<button (click)="closeLogin()" class="close" type="button">×</button>
+<div class="row" style="margin: 0;">
+    <div class="col-md-6 col-12 d-none d-md-block" style="padding:0;">
+        <img src="assets/images/login_side_img.png">
+    </div>
+    <div class="col-sm-12 col-md-6 col-12" style="padding: 15px;">
+        <div class="text-center" *ngIf="loginShow">
+            <div class="login-title">
+                <h2 style="margin-bottom: 3px;">SIGN IN TO YOUR ACCOUNT</h2>
+                <p style="margin-bottom: 2px;">Your account is your portal to all things</p>
+                <hr style="margin-top: 5px;margin-bottom: 10px;" />
+                <div *ngIf="login" class="login-success">
+                    <p>You are successfullt logged in.</p>
+                    <p>please go to live class to check in database. </p>
+                </div>
+                <div *ngIf="unlogin" class="login-failure">
+                    <p>Login Unsuccessfull.</p>
+                    <p>Authentication Failed. </p>
+                </div>
+
+                <form [formGroup]="login_form" (ngSubmit)="onloginSubmit(login_form)">
+                    <div class="input-group form-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="text" class="form-control" formControlName="login_email" [ngClass]="{ 'is-invalid': submitted && f1.login_email.errors }" name="email" placeholder="Phone No / Email Id" required>
+                    </div>
+                    <div *ngIf="submitted && f1.login_email.errors" class="invalid-feedback">
+                        <div *ngIf="f1.login_email.errors.required">Usernamne is required</div>
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" formControlName="login_password" [ngClass]="{ 'is-invalid': submitted && f1.login_password.errors }" name="password" placeholder="Password" required>
+                        <div *ngIf="submitted && f1.login_password.errors" class="invalid-feedback">
+                            <div *ngIf="f1.login_password.errors.required">Password is required</div>
+                        </div>
+                        <input type="hidden" id="video_course" value="0" />
+                        <input type="hidden" id="product_id" value="0" />
+                        <input type="hidden" id="live_class" value="0" />
+                        <input type="hidden" id="free_videos" value="0" />
+                        <input type="hidden" id="test_mod_series" value="0" />
+                        <input type="hidden" id="free_quiz" value="0" />
+                        <input type="hidden" id="practice" value="0" />
+
+                    </div>
+                    <button type="submit" class="btn btn-primary cus-login-btn">Log In</button>
+                </form>
+                <a href="javascript:void(0)" class="modal_forget_pass">Forgot Password ?</a>
+                <p class="login_modal_text"><b>By signing up, you agree to our <a href="javascript:void(0)">Terms of Use</a> and <a href="javascript:void(0)">Privacy Policy</a>.</b></p>
+
+                <hr style="margin: 10px 0;" />
+
+                <!-- <div class="row">
+<div class="col-sm-6">
+<a href="#" class="facebook_login_btn"><img src="assets/images/facebook-icon.png" width="15px"/> <span>Log in with facebook</span></a>
+</div>
+<div class="col-sm-6">
+<a href="#" class="google_login_btn"><img src="assets/images/google-icon.png" width="15px"/> <span>Log in with google</span></a>
+</div>
+</div> -->
+                <p class="login_modal_text_two" style="margin:0;">Don't have an account? <a (click)="signUpShow()" href="javascript:void(0);" id="sign_up_bt">Sign Up</a></p>
+
+            </div>
+        </div>
+        <div class="text-center" *ngIf="!loginShow">
+            <div class="login-title" style="padding: 5px;">
+                <h2 style="margin-bottom: 2px;">CREATE YOUR ACCOUNT</h2>
+                <p style="margin-bottom: 2px;">Your account is your portal to all things</p>
+                <hr style="margin: 8px 0 0px;" />
+            </div>
+            <div *ngIf="registered" class="success-login">
+                <p>Registration Successfull.</p>
+                <p>Thank you For Register With us</p>
+            </div>
+            <div *ngIf="unregistered" class="login-failure">
+                <p>Registration Unsuccessfull.</p>
+                <p>Some thing went wrong. </p>
+            </div>
+            <form [formGroup]="reg_form" (ngSubmit)="onRegSubmit(reg_form)">
+
+                <div class="input-group form-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="text" type="text" class="form-control" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }" name="name" placeholder="Full Name">
+                </div>
+                <div *ngIf="submitted && f.user_name.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_name.errors.required">Usernamne is required</div>
+                </div>
+                <div class="input-group form-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="email" type="text" class="form-control" formControlName="user_email" [ngClass]="{ 'is-invalid': submitted && f.user_email.errors }" name="email" placeholder="Email Id">
+                </div>
+                <div *ngIf="submitted && f.user_email.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_email.errors.required">UserEmail is required</div>
+                </div>
+                <div class="input-group form-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                    <input type="text" class="form-control" formControlName="user_phone" [ngClass]="{ 'is-invalid': submitted && f.user_phone.errors }" name="user_phone" minlength="10" maxlength="10" id="user_id" placeholder="Contact No.">
+                </div>
+                <div *ngIf="submitted && f.user_phone.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_phone.errors.required">UserPhone is required</div>
+                    <div *ngIf="f.user_phone.errors.minlength">UserPhone is minium of 10 digit</div>
+                    <div *ngIf="f.user_phone.errors.maxlength">UserPhone is maximum of 10 digit</div>
+                </div>
+                <div class="input-group form-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input type="password" class="form-control" formControlName="user_password" [ngClass]="{ 'is-invalid': submitted && f.user_password.errors }" minlength="6" name="password" id="user_password" placeholder="Password">
+                </div>
+                <div *ngIf="submitted && f.user_password.errors" class="invalid-feedback">
+                    <div *ngIf="f.user_password.errors.required">password is required</div>
+                    <div *ngIf="f.user_password.errors.minlength">password is of atleast 6 charactors</div>
+                </div>
+                <div class="input-group form-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input type="password" class="form-control" formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" name="confirmpassword" id="confirm_password" placeholder="Confirm Password">
+                </div>
+                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">password is required</div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                </div>
+                <input type="hidden" id="live_class_page" value="0" />
+                <input type="hidden" id="live_class_product_id" value="0" />
+
+                <button type="submit" class="btn btn-primary" style="padding: 3px 10px;">Sign Up</button>
+
+            </form>
+            <p class="login_modal_text" style="margin: 0;">By signing up, you agree to our <a href="javascript:void(0)">Terms of Use</a> and <a href="javascript:void(0)">Privacy Policy</a>.</p>
+            <p class="login_modal_text_two" style="margin: 0;">Already have an account? <a (click)="signInShow()" href="javascript:void(0);" id="sign_in_bt">Sign in</a></p>
+        </div>
+    </div>
+</div>
